@@ -1,0 +1,30 @@
+---
+- name: Fetch and rebase Git repository
+  hosts: 100.26.165.132
+  become: yes
+  tasks:
+    - name: Ensure Git is installed
+      ansible.builtin.yum:
+        name: git
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Ensure Git is installed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Fetch and rebase the repository
+      ansible.builtin.shell: |
+        cd /home/ubuntu
+        git fetch origin main
+        git rebase origin/main
+      args:
+        chdir: /home/ubuntu
+      register: rebase_result
+
+    - name: Debug output
+      ansible.builtin.debug:
+        msg: "{{ rebase_result.stdout }}"
