@@ -1,0 +1,25 @@
+name: Fetch and Rebase on Push
+
+on:
+  push:
+    branches:
+      - main  # You can specify any branch here
+
+jobs:
+  fetch_and_rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH key for EC2 access
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    - name: Run Ansible playbook
+      run: |
+        ansible-playbook -i inventory.ini fetch_and_rebase.yml
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: "False"
