@@ -3,11 +3,7 @@
   hosts: 100.26.165.132
   become: yes
   tasks:
-    - name: Ensure Git is installed
-      ansible.builtin.yum:
-        name: git
-        state: present
-      when: ansible_os_family == "RedHat"
+     
 
     - name: Ensure Git is installed (Debian/Ubuntu)
       ansible.builtin.apt:
