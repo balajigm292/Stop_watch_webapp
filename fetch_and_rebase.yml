@@ -3,8 +3,6 @@
   hosts: 100.26.165.132
   become: yes
   tasks:
-     
-
     - name: Ensure Git is installed (Debian/Ubuntu)
       ansible.builtin.apt:
         name: git
