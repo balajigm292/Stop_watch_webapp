@@ -23,7 +23,7 @@ jobs:
 
       # Build project with Maven
       - name: Build with Maven
-        run: mvn clean install -f MyWebApp/pom.xml
+        run: mvn clean install -f Stop_watch_webapp/pom.xml
 
       # Run SonarQube Scan
       - name: SonarQube Scan
